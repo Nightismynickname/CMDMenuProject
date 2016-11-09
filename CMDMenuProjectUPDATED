@@ -1,0 +1,847 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+
+using namespace std;
+
+char member,cnt1,gender;//cnt1=continue
+string first_name, last_name, prefix; //customer name
+int id,number_of_customers;
+int num_orders, counter[36]{0},updater[36]{0};
+float total[36]{0}; // order tracker
+int input = 0;
+/* Menu Items and their array number -
+chicken_burger(0),beef_burger(1),fish_chip(2),blt_sandwich(3),chicken_chop(4),salad(5)cola(6),sprite(7),100plus(8),
+strawberry_fanta(9),grape_fanta(10),espresso(11),caffe_latte(12),cappuccino(13),americano(14),ice_coffee(15),
+water(16),lemon_tea(17),black_tea(18),green_tea(19),oolong_tea(20),earl_grey(21),jasmine_tea(22),ic_vanilla(23),
+ic_chocolate(24),ic_mint(25),ic_chip(26),ic_orange(27),chocolate_cake(28),cheese_cake(29),lava_cake(30),
+vanilla_muffin(31),chocolate_muffin(32),banana_muffin(33),chocolate_chip_muffin(34),raisin_muffin(35)*/
+
+char menu,menu_c; //menu = choose a menu , menu_c = do you wish to continue with menu
+int food,drink,sweet,patty,soda,coffee,tea,ice_cream,muffin; //menu selector
+//calculation variables
+int order_cnt, payment_method,method_check;
+float food_total,drink_total,dessert_total;
+float basic_total,service_charge,gst_charge,final_total,avg_total;
+float cash_charge,credit_charge,gst;
+
+
+int name()
+{
+    cout << "Please enter your first name" <<endl;
+    cin >> first_name;
+    cout << "Please enter your last name" <<endl;
+    cin >> last_name;
+    cout << "Please enter your gender - male(m),female(f),other(o)" <<endl;
+    cin >> gender;
+    while (gender != 'm' && gender != 'f' && gender != 'o')
+    {
+       cout << "Please enter a valid gender - male(m)";
+       cin >> gender;
+    }
+    switch (gender)
+    {
+    case 'm':
+        prefix = "Mr.";
+        break;
+    case 'f':
+        prefix = "Ms.";
+        break;
+    case 'o':
+        prefix = "Mx.";
+        break;
+    }//end of switch gender
+}//end of name module
+int membership()
+{
+    cnt1 = 'y';
+    while (cnt1 == 'y' && cnt1 != 'x')
+    {
+    cout << "Do you have a BSEU Cafe Membership? (y/n)"<<endl;
+    cin >> member;
+    if (member == 'n')
+        cnt1 = 'n';
+    if (member =='y')
+    {
+        cout << "Please enter BSEU Cafe Membership ID" <<endl;
+        cin >> id;
+        switch (id)
+        {
+        case 110044696:
+            first_name = "Cestlly";
+            last_name = "Coronado";
+            prefix = "Mr.";
+        cout << "ID Accepted = " <<id<<endl;
+        cnt1 = 'x';
+        break;
+        case 110043589:
+            first_name = "Joshua";
+            last_name = "Kang";
+            prefix = "Mr.";
+        cout << "ID Accepted = " <<id<<endl;
+        cnt1 = 'x';
+        break;
+        case 110043541:
+            first_name = "Daniel";
+            last_name = "Shammah";
+            prefix = "Mr.";
+        cout << "ID Accepted = " <<id<<endl;
+        cnt1 = 'x';
+        break;
+        case 110042724:
+            first_name = "Shohin";
+            last_name = "Rahmonov";
+            prefix = "Mr.";
+            cout << "ID Accepted = " <<id<<endl;
+            cnt1 = 'x';
+        break;
+        default:
+            cout << "Invalid ID - " <<id<<endl<< "Please check at the nearest BSEU Cafe branch to check your membership status"<<endl;
+            member = 'n';
+            cout << "Do you wish to continue using this menu program? (y/n)"<<endl;
+            cin >> cnt1;
+        break;
+        }//end of switch
+    }//end of if
+    } //end of while
+}//end of module
+int menu_module()
+{
+    cout << "Please Select a Menu." <<endl << "(m = meals) (b = beverages) (d = desserts)"<<endl;
+    cin >> menu;
+        switch (menu)
+        {
+        case 'm' :
+            cout << "Welcome to the Meals Menu" <<endl << "Please enter the number of the Item you wish to order (1-5)" <<endl;
+            cout << "1 . Cheese Burger - $7" <<endl;
+            cout << "2 . Fish & Chips - $10" <<endl;
+            cout << "3 . BLT Sandwich - $5" <<endl;
+            cout << "4 . Chicken Chop - $10" <<endl;
+            cout << "5 . Selection of Salads - $5" <<endl;
+            cin >> food;
+            switch (food)
+            {
+            case 1:
+                cout << "The Cheese Burger - Chicken(1) or Beef(2)"<<endl;
+                cin >> patty;
+                    switch (patty)
+                    {
+                    case 1:
+                        cout << "You have Chosen The Chicken CheeseBurger" <<endl <<"A Burger with a Quarter Pound Chicken Patty"<<endl << "and a Slice of Cheese with Tomato Sauce" <<endl <<"Price $7.00" <<endl<<endl;
+                        cout << "How many Chicken CheeseBurgers do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                        cin >> updater[0];
+                        while (updater[0] < 0)
+                                updater[0]++;
+                            if (updater[0] >= 1)
+                            {
+                                counter[0] = counter[0] + updater[0];
+                                num_orders = num_orders + updater[0];
+                            }
+                        cout << "Do you wish to continue ordering? (y/n)";
+                        cin >> menu_c;
+                        break;
+                    case 2:
+                         cout << "You have Chosen The Beef CheeseBurger" <<endl <<"A Burger with a Quarter Pound Beef Patty"<<endl << "and a Slice of Cheese with Tomato Sauce" <<endl <<"Price $7.00" <<endl;
+                         cout << "How many Beef CheeseBurgers do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                         cin >> updater[1];
+                         while (updater[1] < 0)
+                                updater[1]++;
+                         if (updater[1] >= 1)
+                            {
+                                counter[1] = counter[1] + updater[1];
+                                num_orders = num_orders + updater[1];
+                            }
+                        cout << "Do you wish to continue ordering? (y/n)";
+                        cin >> menu_c;
+                        break;
+                    default:
+                        cout << "Error Please Enter a Valid Input... Resetting Menu"<<endl;
+                        break;
+                    }
+                break;
+            case 2:
+                cout << "Fish and Chips - " <<endl <<"Fillet Fish with French Fries includes a TarTar Dipping Sauce" <<endl <<"Price $10.00" <<endl;
+                    cout << "How many servings of Fish and Chips do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[2];
+                            while (updater[2] < 0)
+                                updater[2] ++;
+                            if (updater[2] >= 1)
+                            {
+                                counter[2] = counter[2] + updater[2];
+                                num_orders = num_orders + updater[2];
+                            }
+                            cout << "Do you wish to continue ordering? (y/n)";
+                        cin >> menu_c;
+                break;
+            case 3:
+                cout << "BLT Sandwich - " <<endl << "A Bacon Lettuce Tomato Sandwich with a slice of cheese" <<endl <<"Price $5.00" <<endl;
+                    cout << "How many BLT Sandwiches do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[3];
+                            while (updater[3] < 0)
+                                updater[3] ++;
+                            if (updater[3] >= 1)
+                            {
+                                counter[3]= counter[3] + updater[3];
+                                num_orders  = num_orders + updater[3];
+                            }
+                            cout << "Do you wish to continue ordering? (y/n)";
+                        cin >> menu_c;
+                break;
+            case 4:
+                cout << "Chicken Chop - " <<endl << "A Grilled Chicken Chop with Black Pepper Sauce" <<endl <<"Price $10.00" <<endl;
+                    cout << "How many Chicken Chops do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[4];
+                            while (updater[4] < 0)
+                                updater[4] ++;
+                            if (updater[4]>= 1)
+                            {
+                                counter[4]= counter[4] + updater[4];
+                                num_orders = num_orders  + updater[4];
+                            }
+                            cout << "Do you wish to continue ordering? (y/n)";
+                        cin >> menu_c;
+                break;
+            case 5:
+                cout << "BSEU House Salad - " <<endl <<" A Lettuce, Tomato Slices, Cherry Tomatoes,"<<endl << "Chicken Bits with Roasted Sesame Sauce Salad" <<endl <<"Price $5.00" <<endl;
+                    cout << "How many servings of Salad do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[5];
+                            while (updater[5] < 0)
+                                updater[5] ++;
+                            if (updater[5] >= 1)
+                            {
+                                counter[5]=counter[5] + updater[5];
+                                num_orders = num_orders  + updater[5];
+                            }
+                        cout << "Do you wish to continue ordering? (y/n)";
+                        cin >> menu_c;
+                break;
+            default :
+                cout << "Error Please Enter a Valid Input... Returning to Top Menu"<<endl;
+                break;
+            }
+        break; //break of case m
+        case 'b' :
+            cout << "Welcome to the Beverages Menu" <<endl << "Please enter the number of the Item you wish to order (1-5)" <<endl;
+            cout << "1 . Ice Lemon Tea - $2" <<endl;
+            cout << "2 . Mineral Water - $1" <<endl;
+            cout << "3 . Selection of Sodas - $1.5" <<endl;
+            cout << "4 . Selection of Coffees - $varies" <<endl;
+            cout << "5 . Selection of Teas - $3" <<endl;
+            cin >> drink;
+            switch (drink)
+                {
+                case 1:
+                    cout << "Ice Lemon Tea - "<<endl << "500ml Glass with Ice"<<endl << "Price $2.00/glass"<<endl;
+                    cout << "How many glasses of Ice Lemon Tea do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[17];
+                            while (updater[17] < 0)
+                                updater[17] ++;
+                            if (updater[17] >= 1)
+                            {
+                                counter[17]= counter[17] + updater[17];
+                                num_orders = num_orders + updater[17];
+                            }
+                    break;
+                case 2:
+                    cout << "Mineral Water - "<<endl << "In-House Brand 500ml Mineral Water Bottle" <<endl <<  "Price $1.00/bottle"<<endl;
+                    cout << "How many bottles of Mineral Water do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[16];
+                            while (updater[16] < 0)
+                                updater[16] ++;
+                            if (updater[16] >= 1)
+                            {
+                                counter[16]= counter[16]+ updater[16];
+                                num_orders = num_orders + updater[16];
+                            }
+                    break;
+                case 3:
+                    cout << "Selection of Sodas - "<<endl << "1 . Coca Cola " <<endl << "2 . Sprite " <<endl << "3 . 100 Plus " <<endl << "4 . Strawberry Fanta" <<endl <<  "5 . Fanta Fanta" <<endl << "Price $1.50/can" <<endl;
+                    cin >> soda;
+                   switch (soda)
+                    {
+                    case 1:
+                        cout << "You have chosen Coca Cola" <<endl << "Price $1.50/can"<<endl;
+                        cout << "How many cans of Coca Cola do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[6];
+                            while (updater[6] < 0)
+                                updater[6] ++;
+                            if (updater[6] >= 1)
+                            {
+                                counter[6]= counter[6] + updater[6];
+                                num_orders = num_orders + updater[6];
+                            }
+                        break;
+                    case 2:
+                        cout << "You have chosen Sprite" <<endl << "Price $1.50/can"<<endl;
+                        cout << "How many cans of Sprite do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[7];
+                            while (updater[7] < 0)
+                                updater[7] ++;
+                            if (updater[7] >= 1)
+                            {
+                                counter[7]= counter[7] + updater[7];
+                                num_orders = num_orders + updater[7];
+                            }
+                        break;
+                    case 3:
+                        cout << "You have chosen 100 Plus" <<endl << "Price $1.50/can"<<endl;
+                        cout << "How many cans of 100 Plus do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[8];
+                            while (updater[8] < 0)
+                                updater[8] ++;
+                            if (updater[8] >= 1)
+                            {
+                                counter[8]= counter[8]+ updater[8];
+                                num_orders = num_orders + updater[8];
+                            }
+                        break;
+                    case 4:
+                        cout << "You have chosen Strawberry Fanta" <<endl << "Price $1.50/can"<<endl;
+                        cout << "How many cans of Strawberry Fanta do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[9];
+                            while (updater[9] < 0)
+                                updater[9] ++;
+                            if (updater[9] >= 1)
+                            {
+                                counter[9]= counter[9] + updater[9];
+                                num_orders = num_orders + updater[9];
+                            }
+                        break;
+                    case 5:
+                        cout << "You have chosen Grape Fanta" <<endl << "Price $1.50/can"<<endl;
+                        cout << "How many cans of Grape Fanta do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[10];
+                            while (updater[10] < 0)
+                                updater[10] ++;
+                            if (updater[10] >= 1)
+                            {
+                                counter[10]= counter[10] + updater[10];
+                                num_orders = num_orders + updater[10];
+                            }
+                        break;
+                    default:
+                        cout << "Error Please Enter a Valid Input... Returning to Top Menu"<<endl;
+                        break;
+                    }
+                    break;
+                case 4:
+                    cout << "Selection of Coffees"<<endl << "1 . Espresso" <<endl << "2 . Caffe Latte"<<endl << "3 . Cappuccino" <<endl << "4 . Americano" <<endl << "5 . Ice Coffee" <<endl;
+                    cin >> coffee;
+                            switch (coffee)
+                        {
+                        case 1:
+                            cout << "You have chosen Espresso - " <<endl <<"Hot Pure Strong Coffee"<<endl << "Price $5/order"<<endl;
+                            cout << "How many cups of Espresso do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[11];
+                            while (updater[11] < 0)
+                                updater[11] ++;
+                            if (updater[11] >= 1)
+                            {
+                                counter[11]= counter[11] + updater[11];
+                                num_orders = num_orders + updater[11];
+                            }
+                            break;
+                        case 2:
+                            cout << "You have chosen Caffe Latte - " <<endl <<"Coffee with Skimmed Milk and Milk Foam"<<endl << "Price $7/order"<<endl;
+                            cout << "How many cups of Caffe Latte do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[12];
+                            while (updater[12] < 0)
+                                updater[12] ++;
+                            if (updater[12] >= 1)
+                            {
+                                counter[12]= counter[12] + updater[12];
+                                num_orders = num_orders + updater[12];
+                            }
+                            break;
+                        case 3:
+                            cout << "You have chosen Cappuccino - " <<endl <<"Hot Pure Strong Coffee"<<endl << "Price $7/order"<<endl;
+                            cout << "How many cups of Cappuccino do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[13];
+                            while (updater[13] < 0)
+                                updater[13] ++;
+                            if (updater[13] >= 1)
+                            {
+                                counter[13]= counter[13] + updater[13];
+                                num_orders = num_orders + updater[13];
+                            }
+                            break;
+                        case 4:
+                            cout << "You have chosen Americano - " <<endl <<"A Regular Cup of Hot Black Coffee"<<endl << "Price $4/order"<<endl;
+                            cout << "How many cups of Americano do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[14];
+                            while (updater[14] < 0)
+                                updater[14] ++;
+                            if (updater[14] >= 1)
+                            {
+                                counter[14]= counter[14] + updater[14];
+                                num_orders = num_orders + updater[14];
+                            }
+                            break;
+                        case 5:
+                            cout << "You have chosen Ice Coffee - " <<endl <<"A Regular Glass of Coffee with Milk "<<endl << "Price $6/order"<<endl;
+                            cout << "How many cups of Ice Coffee do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[15];
+                            while (updater[15] < 0)
+                                updater[15] ++;
+                            if (updater[15] >= 1)
+                            {
+                                counter[15]= counter[15] + updater[15];
+                                num_orders = num_orders + updater[15];
+                            }
+                            break;
+                        default:
+                            break;
+                        }
+
+                    break;
+                case 5:
+                    cout << "Selection of Teas"<<endl << "1 . Black Tea" <<endl << "2 . Green Tea" <<endl << "3 . Oolong Tea" <<endl << "4 . Earl Grey" <<endl << "5 . Jasmine Tea" <<endl;
+                    cin >> tea;
+                            switch (tea)
+                        {
+                        case 1:
+                            cout << "You have chosen Black Tea - " <<endl <<"TeaBag in a Teapot of Hot water (bottomless) served with milk and sugar packets"<<endl << "Price $3.00/order"<<endl;
+                            cout << "How many teapots of Black Tea do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[18];
+                            while (updater[18] < 0)
+                                updater[18] ++;
+                            if (updater[18] >= 1)
+                            {
+                                counter[18]= counter[18] + updater[18];
+                                num_orders = num_orders + updater[18];
+                            }
+                            break;
+                        case 2:
+                            cout << "You have chosen Green Tea - " <<endl <<"TeaBag in a Teapot of Hot water (bottomless) served with milk and sugar packets"<<endl << "Price $3.00/order"<<endl;
+                            cout << "How many teapots of Green Tea do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[19];
+                            while (updater[19] < 0)
+                                updater[19] ++;
+                            if (updater[19] >= 1)
+                            {
+                                counter[19]= counter[19] + updater[19];
+                                num_orders = num_orders + updater[19];
+                            }
+                            break;
+                        case 3:
+                            cout << "You have chosen Oolong Tea - " <<endl <<"TeaBag in a Teapot of Hot water (bottomless) served with milk and sugar packets"<<endl << "Price $3.00/order"<<endl;
+                            cout << "How many teapots of Oolong Tea do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[20];
+                            while (updater[20] < 0)
+                                updater[20] ++;
+                            if (updater[20] >= 1)
+                            {
+                                counter[20]= counter[20] + updater[20];
+                                num_orders = num_orders + updater[20];
+                            }
+                            break;
+                        case 4:
+                            cout << "You have chosen Earl Grey - " <<endl <<"TeaBag in a Teapot of Hot water (bottomless) served with milk and sugar packets"<<endl << "Price $3.00/order"<<endl;
+                            cout << "How many teapots of Earl Grey do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[21];
+                            while (updater[21] < 0)
+                                updater[21] ++;
+                            if (updater[21] >= 1)
+                            {
+                                counter[21]= counter[21] + updater[21];
+                                num_orders = num_orders + updater[21];
+                            }
+                            break;
+                        case 5:
+                            cout << "You have chosen Jasmine Tea - " <<endl <<"TeaBag in a Teapot of Hot water (bottomless) served with milk and sugar packets"<<endl << "Price $3.00/order"<<endl;
+                            cout << "How many teapots of Jasmine Tea do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[22];
+                            while (updater[22] < 0)
+                                updater[22] ++;
+                            if (updater[22] >= 1)
+                            {
+                                counter[22]= counter[22] + updater[22];
+                                num_orders = num_orders + updater[22];
+                            }
+                            break;
+                        default:
+                            break;
+                        }
+
+                    break;
+                default:
+                    cout << "Error Please Enter a Valid Input... Returning to Top Menu"<<endl;
+                    break;
+                } //end of switch drink menu
+        break; //break of case b
+        case 'd' :
+            cout << "Welcome to the Desserts Menu" <<endl << "Please enter the number of the Item you wish to order (1-5)" <<endl;
+            cout << "1 . Selection of Ice-Cream Flavors - $4/scoop"<<endl;
+            cout << "2 . Chocolate Cake - $7/slice" <<endl;
+            cout << "3 . Cheese Cake - $7/slice" <<endl;
+            cout << "4 . Chocolate Lava Cake - $5/serving" <<endl;
+            cout << "5 . Selection of Muffins - $4/each " <<endl;
+            cin >> sweet;
+            switch (sweet)
+                {
+                case 1:
+                cout << "Selection of Ice-Cream Flavours - " <<endl<< "1 . Vanilla " <<endl<< "2 . Chocolate" <<endl<< "3 . Mint" <<endl<< "4 . Chocolate Chip" <<endl<< "5 . Orange" <<endl;
+                cin >> ice_cream;
+                                switch (ice_cream)
+                        {
+                            case 1:
+                            cout << "You have chosen Vanilla Ice-Cream" <<endl<< "Price $4.00/scoop" <<endl;
+                            cout << "How many scoops of Vanilla Ice-Cream do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[23];
+                            while (updater[23] < 0)
+                                updater[23] ++;
+                            if (updater[23] >= 1)
+                            {
+                                counter[23]= counter[23] + updater[23];
+                                num_orders = num_orders + updater[23];
+                            }
+                                break;
+                            case 2:
+                            cout << "You have chosen Chocolate Ice-Cream" <<endl<< "Price $4.00/scoop"<<endl;
+                            cout << "How many scoops of Chocolate Ice-Cream do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[24];
+                            while (updater[24] < 0)
+                                updater[24] ++;
+                            if (updater[24]>= 1)
+                            {
+                                counter[24]= counter[24] + updater[24];
+                                num_orders = num_orders + updater[24];
+                            }
+                                break;
+                            case 3:
+                            cout << "You have chosen Mint Ice-Cream" <<endl<< "Price $4.00/scoop"<<endl;
+                            cout << "How many scoops of Mint Ice-Cream do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[25];
+                            while (updater[25] < 0)
+                                updater[25] ++;
+                            if (updater[25] >= 1)
+                            {
+                                counter[25]= counter[25] + updater[25];
+                                num_orders = num_orders + updater[25];
+                            }
+                                break;
+                            case 4:
+                            cout << "You have chosen Chocolate Chip Ice-Cream" <<endl<< "Price $4.00/scoop"<<endl;
+                            cout << "How many scoops of Chocolate Chip Ice-Cream do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[26];
+                            while (updater[26] < 0)
+                                updater[26] ++;
+                            if (updater[26] >= 1)
+                            {
+                                counter[26]= counter[26] + updater[26];
+                                num_orders = num_orders + updater[26];
+                            }
+                                break;
+                            case 5:
+                            cout << "You have chosen Orange Ice-Cream" <<endl<< "Price $4.00/scoop"<<endl;
+                            cout << "How many scoops of Orange Ice-Cream do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[27];
+                            while (updater[27] < 0)
+                                updater[27] ++;
+                            if (updater[27] >= 1)
+                            {
+                                counter[27]= counter[27] + updater[27];
+                                num_orders = num_orders + updater[27];
+                            }
+                                break;
+                            default:
+                                cout << "Error Please Enter a Valid Input... Returning to Top Menu"<<endl;
+                                break;
+                            }
+                    break;
+                case 2:
+                    cout << "You have chosen Chocolate Cake" <<endl<< "Price $7.00/slice"<<endl;
+                    cout << "How many slices of Chocolate Cake do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[28];
+                            while (updater[28] < 0)
+                                updater[28] ++;
+                            if (updater[28] >= 1)
+                            {
+                                counter[28]= counter[28] + updater[28];
+                                num_orders = num_orders + updater[28];
+                            }
+                    break;
+                case 3:
+                    cout << "You have chosen Cheese Cake" <<endl<< "Price $7.00/slice"<<endl;
+                    cout << "How many slices of Cheese Cake do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[29];
+                            while (updater[29] < 0)
+                                updater[29] ++;
+                            if (updater[29] >= 1)
+                            {
+                                counter[29]= counter[29] + updater[29];
+                                num_orders = num_orders + updater[29];
+                            }
+                    break;
+                case 4:
+                    cout << "You have chosen Chocolate Lava Cake" <<endl<< "Price $5.00/serving"<<endl;
+                    cout << "How many servings of Chocolate Lava Cake do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[30];
+                            while (updater[30] < 0)
+                                updater[30] ++;
+                            if (updater[30] >= 1)
+                            {
+                                counter[30]= counter[30] + updater[30];
+                                num_orders = num_orders + updater[30];
+                            }
+                    break;
+                case 5:
+                cout << "Selection of Muffin Flavours - " <<endl<< "1 . Vanilla " <<endl<< "2 . Chocolate" <<endl<< "3 . Banana" <<endl<< "4 . Chocolate Chip" <<endl<< "5 . Raisin" <<endl;
+                cin >> muffin;
+                                switch (muffin)
+                            {
+                            case 1:
+                                cout << "You have chosen Vanilla Muffin" <<endl<< "Price $4.00/Muffin"<<endl;
+                                cout << "How many Vanilla Muffins do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[31];
+                            while (updater[31] < 0)
+                                updater[31] ++;
+                            if (updater[31] >= 1)
+                            {
+                                counter[31]= counter[31] + updater[31];
+                                num_orders = num_orders + updater[31];
+                            }
+                                break;
+                            case 2:
+                                cout << "You have chosen Chocolate Muffin" <<endl<< "Price $4.00/Muffin"<<endl;
+                                cout << "How many Chocolate Muffins do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[32];
+                            while (updater[32] < 0)
+                                updater[32] ++;
+                            if (updater[32] >= 1)
+                            {
+                                counter[32]= counter[32] + updater[32];
+                                num_orders = num_orders + updater[32];
+                            }
+                                break;
+                            case 3:
+                                cout << "You have chosen Banana Muffin" <<endl<< "Price $4.00/Muffin"<<endl;
+                                cout << "How many Banana Muffins do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[33];
+                            while (updater[33] < 0)
+                                updater[33] ++;
+                            if (updater[33] >= 1)
+                            {
+                                counter[33]= counter[33] + updater[33];
+                                num_orders = num_orders + updater[33];
+                            }
+                                break;
+                            case 4:
+                                cout << "You have chosen Chocolate-Chip Muffin" <<endl<< "Price $4.00/Muffin"<<endl;
+                                cout << "How many Chocolate-Chip Muffins do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[34];
+                            while (updater[34] < 0)
+                                updater[34] ++;
+                            if (updater[34]>= 1)
+                            {
+                                counter[34]= counter[34] + updater[34];
+                                num_orders = num_orders + updater[34];
+                            }
+                                break;
+                            case 5:
+                                cout << "You have chosen Raisin Muffin" <<endl<< "Price $4.00/Muffin"<<endl;
+                                cout << "How many Raisin Muffins do you want to order?" <<endl<< "If None enter '0'"<<endl;
+                            cin >> updater[35];
+                            while (updater[35] < 0)
+                                updater[35] ++;
+                            if (updater[35]>= 1)
+                            {
+                                counter[35]= counter[35] + updater[35];
+                                num_orders = num_orders + updater[35];
+                            }
+                                break;
+                            default:
+                                cout << "Error Please Enter a Valid Input... Returning to Top Menu"<<endl;
+                                break;
+                            }//end of muffin switch
+                    break;
+                default:
+                    cout << "Error Please Enter a Valid Input... Returning to Top Menu"<<endl;
+                    break;
+                }//end of sweet switch
+        break; //end of case 5 muffin
+        default :
+            cout << "Error Please Enter a Valid Input... Returning to Top Menu"<<endl;
+        break;
+        }//end of switch menu
+}//end of module
+int calculation()
+{
+cout << "Calculating Total" << endl;
+total[0] = counter[0] * 7;
+total[1] = counter[1] * 7;
+total[2] = counter[2] * 10;
+total[3] = counter[3] * 5;
+total[4] = counter[4] * 10;
+total[5] = counter[5] * 5;
+total[6] = counter[6] * 1.5;
+total[7] = counter[7] * 1.5;
+total[8] = counter[8] * 1.5;
+total[9] = counter[9] * 1.5;
+total[10] = counter[10] * 1.5;
+total[11] = counter[11] * 5;
+total[12] = counter[12] * 7;
+total[13] = counter[13] * 7;
+total[14] = counter[14] * 4;
+total[15] = counter[15] * 6;
+total[16] = counter[16] * 1;
+total[17] = counter[17] * 2;
+total[18] = counter[18] * 3;
+total[19] = counter[19] * 3;
+total[20] = counter[20] * 3;
+total[21] = counter[21] * 3;
+total[22] = counter[22] * 3;
+total[23] = counter[23] * 4;
+total[24] = counter[24] * 4;
+total[25] = counter[25] * 4;
+total[26] = counter[26] * 4;
+total[27] = counter[27] * 4;
+total[28] = counter[28] * 7;
+total[29] = counter[29] * 7;
+total[30] = counter[30] * 5;
+total[31] = counter[31] * 4;
+total[32] = counter[32] * 4;
+total[33] = counter[33] * 4;
+total[34] = counter[34] * 4;
+total[35] = counter[35] * 4;
+
+cout << "Your Order";
+    if (counter[0 >= 1])
+    cout <<counter[0] << " Chicken CheeseBurger - RM" << std::fixed << setprecision(2) <<total[0]<<endl;
+    if (counter[1 >= 1])
+    cout <<counter[1] <<  " Beef CheeseBurger - RM" << std::fixed << setprecision(2) <<total[1]<<endl;
+    if (counter[2 >= 1])
+    cout <<counter[2] <<  " Fish and Chips - RM" << std::fixed << setprecision(2) <<total[2]<<endl;
+    if (counter[3 >= 1])
+    cout <<counter[3] <<  " BLT Sandwich - RM" << std::fixed << setprecision(2) <<total[3]<<endl;
+    if (counter[4 >= 1])
+    cout <<counter[4] <<  " Chicken Chop - RM" << std::fixed << setprecision(2) <<total[4]<<endl;
+    if (counter[5 >= 1])
+    cout <<counter[5] <<  " Salad - RM" << std::fixed << setprecision(2) <<total[5]<<endl;
+    if (counter[6 >= 1])
+    cout <<counter[6] <<  " Cola - RM" << std::fixed << setprecision(2) <<total[6]<<endl;
+    if (counter[7 >= 1])
+    cout <<counter[7] <<  " Sprite - RM" << std::fixed << setprecision(2) <<total[7]<<endl;
+    if (counter[8 >= 1])
+    cout <<counter[8] <<  " 100 Plus - RM" << std::fixed << setprecision(2) <<total[8]<<endl;
+    if (counter[9 >= 1])
+    cout <<counter[9] <<  " Strawberry Fanta - RM" << std::fixed << setprecision(2) <<total[9]<<endl;
+    if (counter[10 >= 1])
+    cout <<counter[10] <<  "Grape Fanta - RM" << std::fixed << setprecision(2) <<total[10]<<endl;
+    if (counter[11 >= 1])
+    cout <<counter[11] <<  " Espresso - RM" << std::fixed << setprecision(2) <<total[11]<<endl;
+    if (counter[12 >= 1])
+    cout <<counter[12] <<  " Caffe Latte - RM" << std::fixed << setprecision(2) <<total[12]<<endl;
+    if (counter[13 >= 1])
+    cout <<counter[13] <<  " Cappuccino - RM" << std::fixed << setprecision(2) <<total[13]<<endl;
+    if (counter[14 >= 1])
+    cout <<counter[14] <<  " Americano - RM" << std::fixed << setprecision(2) <<total[14]<<endl;
+    if (counter[15 >= 1])
+    cout <<counter[15] <<  " Ice Coffee - RM" << std::fixed << setprecision(2) <<total[15]<<endl;
+    if (counter[16 >= 1])
+    cout <<counter[16] <<  " Water - RM" << std::fixed << setprecision(2) <<total[16]<<endl;
+    if (counter[17 >= 1])
+    cout <<counter[17] <<  " Lemon Tea - RM" << std::fixed << setprecision(2) <<total[17]<<endl;
+    if (counter[18 >= 1])
+    cout <<counter[18] <<  " Black Tea - RM" << std::fixed << setprecision(2) <<total[18]<<endl;
+    if (counter[19 >= 1])
+    cout <<counter[19] <<  " Green Tea - RM" << std::fixed << setprecision(2) <<total[19]<<endl;
+    if (counter[20 >= 1])
+    cout <<counter[20] <<  " Oolong Tea - RM" << std::fixed << setprecision(2) <<total[20]<<endl;
+    if (counter[21 >= 1])
+    cout <<counter[21] <<  " Earl Grey Tea - RM" << std::fixed << setprecision(2) <<total[21]<<endl;
+    if (counter[22 >= 1])
+    cout <<counter[22] <<  " Jasmine Tea - RM" << std::fixed << setprecision(2) <<total[22]<<endl;
+    if (counter[23 >= 1])
+    cout <<counter[23] <<  " Vanilla Ice-Cream - RM" << std::fixed << setprecision(2) <<total[23]<<endl;
+    if (counter[24 >= 1])
+    cout <<counter[24] <<  " Chocolate Ice-Cream - RM" << std::fixed << setprecision(2) <<total[24]<<endl;
+    if (counter[25 >= 1])
+    cout <<counter[25] <<  " Mint Ice-Cream - RM" << std::fixed << setprecision(2) <<total[25]<<endl;
+    if (counter[26 >= 1])
+    cout <<counter[26] <<  " Chocolate Chip Ice-Cream - RM" << std::fixed << setprecision(2) <<total[26]<<endl;
+    if (counter[27 >= 1])
+    cout <<counter[27] <<  " Orange Ice Cream - RM" << std::fixed << setprecision(2) <<total[27]<<endl;
+    if (counter[28 >= 1])
+    cout <<counter[28] <<  " Chocolate Cake - RM" << std::fixed << setprecision(2) <<total[28]<<endl;
+    if (counter[29 >= 1])
+    cout <<counter[29] <<  " Cheese Cake - RM" << std::fixed << setprecision(2) <<total[29]<<endl;
+    if (counter[30 >= 1])
+    cout <<counter[30] <<  " Chocolate Lava Cake - RM" << std::fixed << setprecision(2) <<total[30]<<endl;
+    if (counter[31 >= 1])
+    cout <<counter[31] <<  " Vanilla Muffin - RM" << std::fixed << setprecision(2) <<total[31]<<endl;
+    if (counter[32 >= 1])
+    cout <<counter[32] <<  " Chocolate Muffin - RM" << std::fixed << setprecision(2) <<total[32]<<endl;
+    if (counter[33 >= 1])
+    cout <<counter[33] <<  " Banana Muffin - RM" << std::fixed << setprecision(2) <<total[33]<<endl;
+    if (counter[34 >= 1])
+    cout <<counter[34] <<  " Chocolate Chip Muffin - RM" << std::fixed << setprecision(2) <<total[34]<<endl;
+    if (counter[35 >= 1])
+    cout <<counter[35] <<  " Raisin Muffin - RM" << std::fixed << setprecision(2) <<total[35]<<endl;
+
+    basic_total = total[0] + total[1] + total[2] + total[3] + total[4] + total[5] + total[6] + total[7] + total[8] + total[9] + total[10] + total[11] + total[12] + total[13] + total[14] + total[15] + total[16] + total[17] + total[18] + total[19] + total[20] + total[21] + total[22] + total[23] + total[24] + total[25] + total[26] + total[27] + total[28] + total[29] + total[30] + total[31] + total[32] + total[33] + total[34] + total[35];
+    gst = (basic_total / 100) * 6;
+    basic_total = basic_total + gst;
+    cash_charge = (basic_total/100)*8;
+    credit_charge = (basic_total/100)*5;
+
+    cout << " GST (6%) = RM " << std::fixed << setprecision(2) << gst <<endl;
+    cout << " Your Total = RM " << std::fixed << setprecision(2) << basic_total <<endl;
+    cout << " How would you be making your payment?" <<endl << "(1)Credit Card(8% service charge)" <<endl<< "(2)Cash (5% charge)"<<endl;
+    cout << "Input (1) or (2)";
+    cin >> payment_method;
+    method_check == 0;
+    while (method_check == 0)
+    {
+    switch (payment_method)
+    {
+    case 1:
+        cout << "Credit Card Charge(8%) = RM" << std::fixed << setprecision(2) << credit_charge <<endl;
+        final_total = basic_total + credit_charge;
+        cout << "Final Total = RM " <<  std::fixed << setprecision(2) <<final_total<<endl;
+        avg_total = final_total / number_of_customers;
+        cout << "Total Per Person = RM " <<  std::fixed << setprecision(2) <<avg_total<<endl;
+
+        method_check++;
+        break;
+    case 2:
+        cout << "Cash Charge(5%) = RM" << std::fixed << setprecision(2) << cash_charge <<endl;
+        final_total = basic_total + cash_charge;
+        cout << "Final Total = RM " <<  std::fixed << setprecision(2) <<final_total<<endl;
+        avg_total = final_total / number_of_customers;
+        cout << "Total Per Person = RM " <<  std::fixed << setprecision(2) <<avg_total<<endl;
+
+        method_check++;
+        break;
+    default :
+        cout << "Invalid Input - Please Enter (1) for Credit Card or (2) for Cash";
+        cin >> payment_method;
+    }//end of payment method switch
+    }//end of while
+
+}//end of calculation module
+int main()
+{
+    cout << "Please enter the number of person(s)" <<endl;
+    cin >> number_of_customers;
+
+    membership();
+
+    cnt1 = 'y';
+    if (member != 'y')
+    name();
+
+    cout << "Welcome "<< prefix << first_name <<" " << last_name <<endl;
+     cout << "All Menu Items are subject to GST of 6%" <<endl<< "All Menu Items are subject to a 5% Service Charge For Cash Payments" <<endl<< "ALl Menu Items are subject to a 8% Service Charge for Credit Card Payments" <<endl;
+menu_c = 'y';
+while (menu_c == 'y')
+{
+    menu_module();
+}
+    if (num_orders >= 1)
+        calculation();
+
+    cout <<endl<< "END OF CODE";
+    return 0;
+}
+
